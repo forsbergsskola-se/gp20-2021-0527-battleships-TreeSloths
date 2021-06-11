@@ -5,20 +5,29 @@
 #ifndef BATTLESHIPS_ENEMYBATTLEFIELD_H
 #define BATTLESHIPS_ENEMYBATTLEFIELD_H
 int enemyBoardArr[10][10];
-int maxShip = 5;
+int maxEnemyShips = 5;
+
+bool enemyShoot(int x, int y) {
+    if(boardArr[x][y] == 1) {
+        boardArr[x][y] = 2;
+        return true;
+    }
+    return false;
+}
+
 void initializeEnemyArr() {
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
-            boardArr[i][j] = 0;
+            enemyBoardArr[i][j] = 0;
         }
     }
 }
 
-int displayamntShips() {
+int displayEnemyShipAmount() {
     for (int i = 0; i < 10; i++) {
         int amountofShips = 0;
         for (int j = 0; j < 10; j++) {
-            if(boardArr[i][j] == 1) {
+            if(enemyBoardArr[i][j] == 1) {
                 amountofShips++;
             }
             return amountofShips;
@@ -27,27 +36,37 @@ int displayamntShips() {
 }
 
 
-void shipSpawn() {
+void enemyShipSpawn() {
     int ships = 0;
-    while(ships < maxShip) {
-        int x = rand() % 6;
-        int y = rand() % 6;
-        if(boardArr[x][y] != 1) {
+    while(ships < maxEnemyShips) {
+        int x = rand() % 10;
+        int y = rand() % 10;
+        if(enemyBoardArr[x][y] != 1) {
             ships++;
-            boardArr[x][y] = 1;
+            enemyBoardArr[x][y] = 1;
         }
     }
 }
 
 
-void showArr(){
+void showEnemyArr(){
     for (int i = 0; i < 10; i++) {
         for(int j = 0; j < 10; j++ ) {
-            std::cout <<  boardArr[i][j] << "  ";
+            std::cout <<  enemyBoardArr[i][j] << "  ";
         }
         std::cout << "\n";
     }
     displayamntShips();
+}
+
+void enemyAI(){
+    initializeEnemyArr();
+    int x = rand() % 20;
+    int y = rand() % 20;
+    if(enemyShoot(x, y)) {
+        std::cout << "Enemy hit your ship!" << std::endl;
+    } else
+        std::cout << "Enemy missed your ship!" << std::endl;
 }
 
 
